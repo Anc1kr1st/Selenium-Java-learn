@@ -1,0 +1,30 @@
+package sel.pack;
+
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+
+public class SeleniumClass {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Google\\Chrome\\Application\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		driver.get("https://login.yahoo.com/");
+		driver.findElement(By.xpath("//input[@id='login-username']")).sendKeys("edureka@yahoo.com");
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//input[@id='login-signin']")).click();
+		Thread.sleep(3000);
+		
+		driver.quit();
+	}
+
+}
