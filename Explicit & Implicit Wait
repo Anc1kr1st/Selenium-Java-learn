@@ -1,0 +1,58 @@
+package sel.pack;
+
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+public class SeleniumClass {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Google\\Chrome\\Application\\chromedriver.exe");
+		
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--incognito");
+		WebDriver driver = new ChromeDriver(options);
+		
+		driver.get("https://www.facebook.com/");
+		driver.manage().window().maximize();
+		driver.findElement(By.xpath("/html[1]/body[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/div[4]/button[1]")).click();
+		
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		driver.findElement(By.xpath("//form//a[@role='button'][contains(.,'Vytvoriť nový účet')]")).click();
+		
+		WebElement firstname= driver.findElement(By.name("firstname"));
+		WebElement lastname= driver.findElement(By.name("lastname"));
+		
+		sendKeys(driver, firstname, 10, "Big");
+		sendKeys(driver, lastname, 20, "Foot");
+		
+		WebElement learnMore= driver.findElement(By.linkText("Learn more"));
+		clickOn(driver,learnMore, 10);
+		
+		Thread.sleep(3000);
+		
+		driver.quit();
+
+	}
+	
+	public static void sendKeys(WebDriver driver1, WebElement element, int timeout, String value)
+	{
+		new WebDriverWait(driver1, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(element));
+		element.sendKeys(value);
+	}
+	
+	public static void clickOn(WebDriver driver1, WebElement element, int timeout)
+	{
+		new WebDriverWait(driver1, Duration.ofSeconds(timeout)).until(ExpectedConditions.elementToBeClickable(element));
+		element.click();
+	}
+	
+}
